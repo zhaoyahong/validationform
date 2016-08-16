@@ -129,6 +129,7 @@
 				var psw=hex_sha1(pswElem.val());
 				pswElem.val(psw);
 				$("#reg-form input[name=password2]").val(psw);
+				return true;
 			}
 			return false;
 		}
