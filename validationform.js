@@ -12,14 +12,14 @@ var validationForm = function (form, formStruct, tipStruct) {
             switch (k) {
                 case 'noEmpty':
                     if (v == true && val.length == 0) {
-                        var tip = tips['noEmpty'] || '输入不能位空';
+                        var tip = tips['noEmpty'] || 'The field is required.';
                         showTooltip(elem, tip);
                         return false;
                     }
                     break;
                 case 'minLength':
                     if (val.length < v) {
-                        var tip = tips['minLength'] || '输入长度不能小于%s位';
+                        var tip = tips['minLength'] || 'The field must be at least %s characters in length.';
                         tip = sprintf(tip, v);
                         showTooltip(elem, tip);
                         return false;
@@ -27,7 +27,7 @@ var validationForm = function (form, formStruct, tipStruct) {
                     break;
                 case 'maxLength':
                     if (val.length > v) {
-                        var tip = tips['maxLength'] || '输入长度不能大于%s位';
+                        var tip = tips['maxLength'] || 'The field must not exceed %s characters in length.';
                         tip = sprintf(tip, v);
                         showTooltip(elem, tip);
                         return false;
@@ -36,14 +36,14 @@ var validationForm = function (form, formStruct, tipStruct) {
                 case 'email':
                     var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/;
                     if (!reg.test(val)) {
-                        var tip = tips['email'] || '输入的邮箱格式不正确'
+                        var tip = tips['email'] || 'The field must contain a valid email address.'
                         showTooltip(elem, tip);
                         return false;
                     }
                     break;
                 case 'equalTo':
                     if (val != this.form.find("input[name=" + v + "]").prop("value")) {
-                        var tip = tips['equalTo'] || '输入的两次值不相同'
+                        var tip = tips['equalTo'] || 'The two fileds are not euqal.'
                         showTooltip(elem, tip);
                         return false;
                     }
