@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<link href="lib/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.form-panel {
+			margin-top: 25px;
+			background-color: #FFFFFF;
+			padding: 10px;
+			width: 330px;
+			float: right;
+			margin: 100px 60px 0 0;
+			border: 1px solid rgba(147, 184, 189, 0.8);
+			-webkit-box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7), 0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+			-moz-box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7), 0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+			box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7), 0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+			-webkit-box-shadow: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+		}
+		
+		.form-head {
+			font-size: 18px;
+			background-color: #008eb7;
+			color: #fff;
+			padding: 6px 0;
+		}
+		
+		.form-group input[type=text],
+		.form-group input[type=password],
+		.form-group input[type=number],
+		.form-group input[type=email],
+		.form-group select {
+			border: 1px solid #6CD7C8;
+			border-radius: 0;
+		}
+		
+		.btn-square-default {
+			background-color: #008eb7;
+			color: #fff;
+			-webkit-border-radius: 0;
+			-moz-border-radius: 0;
+			border-radius: 0;
+			border-width: 1px solid #008eb7;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid main">
+		<div class="container">
+			<div class="form-panel">
+				<p class="text-center form-head">注册</p>
+				<form id="reg-form" class="form-horizontal" action="passport/reg" method="post" onsubmit="return vaildRegForm()">
+					<div class="form-group">
+						<div class="col-xs-12">
+							<input name="email" type="email" class="form-control col-xs-12" placeholder="邮箱" data-toggle="tooltip" data-trigger="manual"
+								data-placement="left">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-12">
+							<input name="nick" type="text" class="form-control col-xs-12" placeholder="昵称，4~10位" data-toggle="tooltip" data-trigger="manual"
+								data-placement="left">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-12">
+							<input name="password" type="password" class="form-control  col-xs-12" placeholder="密码，6~20位" data-toggle="tooltip" data-trigger="manual"
+								data-placement="left">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-12">
+							<input name="password2" type="password" class="form-control  col-xs-12" placeholder="确认密码" data-toggle="tooltip" data-trigger="manual"
+								data-placement="left">
+						</div>
+					</div>
+					<div class="form-group form-submit">
+						<div class="col-xs-12">
+							<button id="submit-btn" type="submit" class="btn btn-square-default pull-right">注册</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="lib/jquery-3.1.0.min.js"></script>
+	<script src="lib/bootstrap.min.js"></script>
+	<script src="validationform.js"></script>
+	<script>
+		var formStruct={
+			email:{
+				noEmpty:true,
+				email:true
+			},
+			nick:{
+				noEmpty:true,
+				minLength:4,
+				maxLength:10                
+			},
+			password:{
+				noEmpty:true,
+				minLength:6,
+				maxLength:20            
+			},
+			password2:{
+				noEmpty:true,
+				minLength:6,
+				maxLength:20,
+				equalTo:'password'          
+			}
+		}
+		//tips非必要
+		var tips={
+			password2:{
+				equalTo:'两次输入密码不相同'          
+			}
+		}
+		var validation=new validationForm($("#reg-form"),formStruct,tips)
+		validation.listen('blur');
+		function vaildRegForm(){
+			var validationResult=validation.vaildate();
+			if(validationResult){
+				var pswElem=$("#reg-form input[name=password]");
+				var psw=hex_sha1(pswElem.val());
+				pswElem.val(psw);
+				$("#reg-form input[name=password2]").val(psw);
+			}
+			return false;
+		}
+	</script>
+</body>
+
+</html>
